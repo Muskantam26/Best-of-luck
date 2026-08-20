@@ -1,9 +1,12 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Sparkles, ArrowRight, Heart, Star, Gift, ShoppingBag } from 'lucide-react';
+import { Sparkles, ArrowRight, Star, Gift, ShoppingBag } from 'lucide-react';
+import { useShop } from '../context/ShopContext';
 
-export default function Hero({ onShopClick, onExploreGiftsClick, onQuickView }) {
-  // Stagger container animation
+export default function Hero() {
+  const { setQuickViewProduct, PRODUCTS } = useShop();
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -38,8 +41,13 @@ export default function Hero({ onShopClick, onExploreGiftsClick, onQuickView }) 
     }),
   };
 
+  const openProduct = (id) => {
+    const p = PRODUCTS.find(prod => prod.id === id);
+    if (p) setQuickViewProduct(p);
+  };
+
   return (
-    <section id="home" className="relative overflow-hidden pt-6 pb-16 lg:py-20 bg-gradient-to-b from-[#FAF7F2] via-[#FDF5F2] to-[#FAF7F2]">
+    <section className="relative overflow-hidden pt-6 pb-16 lg:py-20 bg-gradient-to-b from-[#FAF7F2] via-[#FDF5F2] to-[#FAF7F2]">
       
       {/* Background Decorative Soft Blobs */}
       <div className="absolute top-12 left-1/4 w-96 h-96 bg-[#FBEAE7] rounded-full blur-3xl opacity-60 pointer-events-none animate-pulse-glow" />
@@ -57,7 +65,7 @@ export default function Hero({ onShopClick, onExploreGiftsClick, onQuickView }) 
           >
             {/* Small Badge */}
             <motion.div variants={itemVariants} className="inline-flex items-center">
-              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#FBEAE7] border border-[#F7D6D0] text-[#C26D70] text-xs font-semibold tracking-wider uppercase shadow-xs">
+              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#FBEAE7] border border-[#F7D6D0] text-[#C26D70] text-xs font-bold tracking-wider uppercase shadow-2xs">
                 <Sparkles className="w-3.5 h-3.5" />
                 Cute Finds • Thoughtfully Curated
               </span>
@@ -68,7 +76,7 @@ export default function Hero({ onShopClick, onExploreGiftsClick, onQuickView }) 
               variants={itemVariants}
               className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-[#2D2424] leading-[1.15] tracking-tight"
             >
-              Little Things That Make Life More <span className="text-[#C26D70] font-script font-normal text-5xl sm:text-6xl lg:text-7xl italic ml-1">Lovely.</span>
+              Little Things. Big Smiles. <span className="text-[#C26D70] font-script font-normal text-5xl sm:text-6xl lg:text-7xl italic ml-1">♡</span>
             </motion.h1>
 
             {/* Subheading */}
@@ -76,7 +84,7 @@ export default function Hero({ onShopClick, onExploreGiftsClick, onQuickView }) 
               variants={itemVariants}
               className="text-base sm:text-lg text-[#594A47] font-normal leading-relaxed max-w-xl mx-auto lg:mx-0"
             >
-              Discover cute stationery, trendy accessories, thoughtful gifts and everyday essentials — curated specially for you.
+              Cute stationery, everyday essentials, thoughtful gifts and little treasures — all in one happy place.
             </motion.p>
 
             {/* Action Buttons */}
@@ -84,22 +92,22 @@ export default function Hero({ onShopClick, onExploreGiftsClick, onQuickView }) 
               variants={itemVariants}
               className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2"
             >
-              <button
-                onClick={onShopClick}
-                className="w-full sm:w-auto px-8 py-4 bg-[#C26D70] hover:bg-[#b05c5f] text-white font-medium rounded-full shadow-lg shadow-[#C26D70]/20 hover:shadow-xl hover:shadow-[#C26D70]/30 transition-all duration-300 transform hover:-translate-y-0.5 flex items-center justify-center gap-2 group"
+              <Link
+                to="/shop"
+                className="w-full sm:w-auto px-8 py-4 bg-[#C26D70] hover:bg-[#b05c5f] text-white font-bold rounded-full shadow-lg shadow-[#C26D70]/20 hover:shadow-xl hover:shadow-[#C26D70]/30 transition-all duration-300 transform hover:-translate-y-0.5 flex items-center justify-center gap-2 group text-xs uppercase tracking-wider"
               >
                 <ShoppingBag className="w-4 h-4" />
-                <span>Shop Collection</span>
+                <span>SHOP NOW</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </button>
+              </Link>
 
-              <button
-                onClick={onExploreGiftsClick}
-                className="w-full sm:w-auto px-8 py-4 bg-white hover:bg-[#FBEAE7] text-[#2D2424] font-medium rounded-full border border-[#F7D6D0] shadow-sm hover:shadow transition-all duration-300 flex items-center justify-center gap-2"
+              <Link
+                to="/category/gifts"
+                className="w-full sm:w-auto px-8 py-4 bg-white hover:bg-[#FBEAE7] text-[#2D2424] font-bold rounded-full border border-[#F7D6D0] shadow-2xs hover:shadow transition-all duration-300 flex items-center justify-center gap-2 text-xs uppercase tracking-wider"
               >
                 <Gift className="w-4 h-4 text-[#C26D70]" />
-                <span>Explore Gifts</span>
-              </button>
+                <span>EXPLORE GIFTS</span>
+              </Link>
             </motion.div>
 
             {/* Mini Trust Highlights */}
@@ -164,9 +172,6 @@ export default function Hero({ onShopClick, onExploreGiftsClick, onQuickView }) 
                   className="w-full h-[380px] sm:h-[480px] object-cover object-center group-hover:scale-105 transition-transform duration-700"
                 />
                 
-                {/* Subtle Overlay Gradient */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
-
                 {/* Floating Product Badges over Hero Image */}
                 
                 {/* 1. Mini Calculator Tag */}
@@ -175,13 +180,13 @@ export default function Hero({ onShopClick, onExploreGiftsClick, onQuickView }) 
                   variants={floatingProductVariants}
                   initial="hidden"
                   animate="visible"
-                  onClick={() => onQuickView('mini-calculator')}
-                  className="absolute top-8 left-6 bg-white/95 backdrop-blur-md px-3.5 py-2 rounded-2xl shadow-lg border border-[#F7D6D0] flex items-center gap-2 cursor-pointer hover:bg-[#FBEAE7] transition-all transform hover:scale-105"
+                  onClick={() => openProduct('mini-calculator')}
+                  className="absolute top-6 left-6 bg-white/95 backdrop-blur-md px-3.5 py-2 rounded-2xl shadow-lg border border-[#F7D6D0] flex items-center gap-2 cursor-pointer hover:bg-[#FBEAE7] transition-all transform hover:scale-105"
                 >
                   <img src="/images/product_calculator.png" alt="Mini Calculator" className="w-8 h-8 rounded-lg object-cover" />
                   <div>
                     <div className="text-xs font-bold text-[#2D2424]">Mini Calculator</div>
-                    <div className="text-[10px] text-[#C26D70] font-semibold">₹299 • Best Seller</div>
+                    <div className="text-[10px] text-[#C26D70] font-semibold">₹299 • Bestseller</div>
                   </div>
                 </motion.div>
 
@@ -191,13 +196,13 @@ export default function Hero({ onShopClick, onExploreGiftsClick, onQuickView }) 
                   variants={floatingProductVariants}
                   initial="hidden"
                   animate="visible"
-                  onClick={() => onQuickView('tote-bag')}
-                  className="absolute bottom-8 right-6 bg-white/95 backdrop-blur-md px-3.5 py-2 rounded-2xl shadow-lg border border-[#F7D6D0] flex items-center gap-2 cursor-pointer hover:bg-[#FBEAE7] transition-all transform hover:scale-105"
+                  onClick={() => openProduct('tote-bag')}
+                  className="absolute bottom-6 right-6 bg-white/95 backdrop-blur-md px-3.5 py-2 rounded-2xl shadow-lg border border-[#F7D6D0] flex items-center gap-2 cursor-pointer hover:bg-[#FBEAE7] transition-all transform hover:scale-105"
                 >
                   <img src="/images/product_tote.png" alt="Tote Bag" className="w-8 h-8 rounded-lg object-cover" />
                   <div>
-                    <div className="text-xs font-bold text-[#2D2424]">Floral Canvas Tote</div>
-                    <div className="text-[10px] text-[#C26D70] font-semibold">₹499 • Organic</div>
+                    <div className="text-xs font-bold text-[#2D2424]">Canvas Tote Bag</div>
+                    <div className="text-[10px] text-[#C26D70] font-semibold">₹499 • Popular</div>
                   </div>
                 </motion.div>
 
@@ -207,26 +212,26 @@ export default function Hero({ onShopClick, onExploreGiftsClick, onQuickView }) 
                   variants={floatingProductVariants}
                   initial="hidden"
                   animate="visible"
-                  onClick={() => onQuickView('korean-sling-bag')}
+                  onClick={() => openProduct('korean-sling-bag')}
                   className="absolute top-1/2 left-4 -translate-y-1/2 bg-white/95 backdrop-blur-md px-3.5 py-2 rounded-2xl shadow-lg border border-[#F7D6D0] hidden sm:flex items-center gap-2 cursor-pointer hover:bg-[#FBEAE7] transition-all transform hover:scale-105"
                 >
-                  <img src="/images/product_slingbag.png" alt="Sling Bag" className="w-8 h-8 rounded-lg object-cover" />
+                  <img src="/images/product_slingbag.png" alt="Korean Sling Bag" className="w-8 h-8 rounded-lg object-cover" />
                   <div>
                     <div className="text-xs font-bold text-[#2D2424]">Korean Sling Bag</div>
-                    <div className="text-[10px] text-[#C26D70] font-semibold">₹699 • New Arrival</div>
+                    <div className="text-[10px] text-[#C26D70] font-semibold">₹699 • New</div>
                   </div>
                 </motion.div>
 
               </motion.div>
 
-              {/* Small Floating Product Thumbnails around main showcase */}
+              {/* Small Floating Product Thumbnails below hero image */}
               <div className="grid grid-cols-3 gap-3 mt-4">
                 <motion.div
                   whileHover={{ y: -4 }}
-                  onClick={() => onQuickView('facial-wrist-band')}
-                  className="bg-white p-2 rounded-2xl shadow-sm border border-[#F2EBD9] flex items-center gap-2 cursor-pointer hover:border-[#F7D6D0] transition-all"
+                  onClick={() => openProduct('facial-wrist-band')}
+                  className="bg-white p-2 rounded-2xl shadow-xs border border-[#F2EBD9] flex items-center gap-2 cursor-pointer hover:border-[#F7D6D0] transition-all"
                 >
-                  <img src="/images/product_wristband.png" alt="Wristband" className="w-10 h-10 rounded-xl object-cover" />
+                  <img src="/images/product_wristband.png" alt="Wristband" className="w-9 h-9 rounded-xl object-cover" />
                   <div className="overflow-hidden">
                     <p className="text-[11px] font-bold text-[#2D2424] truncate">Spa Wristband</p>
                     <p className="text-[10px] text-[#C26D70] font-semibold">₹199</p>
@@ -235,10 +240,10 @@ export default function Hero({ onShopClick, onExploreGiftsClick, onQuickView }) 
 
                 <motion.div
                   whileHover={{ y: -4 }}
-                  onClick={() => onQuickView('press-on-nails')}
-                  className="bg-white p-2 rounded-2xl shadow-sm border border-[#F2EBD9] flex items-center gap-2 cursor-pointer hover:border-[#F7D6D0] transition-all"
+                  onClick={() => openProduct('press-on-nails')}
+                  className="bg-white p-2 rounded-2xl shadow-xs border border-[#F2EBD9] flex items-center gap-2 cursor-pointer hover:border-[#F7D6D0] transition-all"
                 >
-                  <img src="/images/product_nails.png" alt="Press on Nails" className="w-10 h-10 rounded-xl object-cover" />
+                  <img src="/images/product_nails.png" alt="Press on Nails" className="w-9 h-9 rounded-xl object-cover" />
                   <div className="overflow-hidden">
                     <p className="text-[11px] font-bold text-[#2D2424] truncate">Press on Nails</p>
                     <p className="text-[10px] text-[#C26D70] font-semibold">₹299</p>
@@ -247,12 +252,12 @@ export default function Hero({ onShopClick, onExploreGiftsClick, onQuickView }) 
 
                 <motion.div
                   whileHover={{ y: -4 }}
-                  onClick={() => onQuickView('silicon-travel-pouch')}
-                  className="bg-white p-2 rounded-2xl shadow-sm border border-[#F2EBD9] flex items-center gap-2 cursor-pointer hover:border-[#F7D6D0] transition-all"
+                  onClick={() => openProduct('silicon-travel-pouch')}
+                  className="bg-white p-2 rounded-2xl shadow-xs border border-[#F2EBD9] flex items-center gap-2 cursor-pointer hover:border-[#F7D6D0] transition-all"
                 >
-                  <img src="/images/product_pouch.png" alt="Silicon Pouch" className="w-10 h-10 rounded-xl object-cover" />
+                  <img src="/images/product_pouch.png" alt="Silicone Pouch" className="w-9 h-9 rounded-xl object-cover" />
                   <div className="overflow-hidden">
-                    <p className="text-[11px] font-bold text-[#2D2424] truncate">Silicon Pouch</p>
+                    <p className="text-[11px] font-bold text-[#2D2424] truncate">Silicone Pouch</p>
                     <p className="text-[10px] text-[#C26D70] font-semibold">₹349</p>
                   </div>
                 </motion.div>

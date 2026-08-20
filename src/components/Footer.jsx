@@ -1,5 +1,6 @@
 import React from 'react';
-import { Heart, Sparkles, ArrowUp } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Heart, ArrowUp } from 'lucide-react';
 
 const InstagramIcon = ({ className = "w-4 h-4" }) => (
   <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -15,7 +16,11 @@ const FacebookIcon = ({ className = "w-4 h-4" }) => (
   </svg>
 );
 
-export default function Footer({ onScrollToTop }) {
+export default function Footer() {
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <footer id="footer" className="bg-white border-t border-[#F2EBD9] pt-16 pb-8 text-[#594A47]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -25,14 +30,14 @@ export default function Footer({ onScrollToTop }) {
           
           {/* Brand Column */}
           <div className="lg:col-span-2 space-y-4">
-            <a href="#home" className="inline-flex items-center gap-2">
+            <Link to="/" className="inline-flex items-center gap-2">
               <span className="w-8 h-8 rounded-full bg-[#FBEAE7] flex items-center justify-center text-[#C26D70] text-sm border border-[#F7D6D0]">
                 🎀
               </span>
               <span className="font-serif text-2xl font-bold text-[#2D2424]">
                 Beads of Luck
               </span>
-            </a>
+            </Link>
             <p className="text-xs text-[#7A6C68] leading-relaxed max-w-sm">
               Discover cute stationery, trendy accessories, thoughtful gifts and everyday essentials — curated specially for you with love & magic.
             </p>
@@ -60,42 +65,46 @@ export default function Footer({ onScrollToTop }) {
 
           {/* Shop Column */}
           <div className="space-y-3">
-            <h4 className="font-serif text-sm font-bold text-[#2D2424] uppercase tracking-wider">
-              Shop
+            <h4 className="font-serif text-xs font-bold text-[#2D2424] uppercase tracking-wider">
+              SHOP
             </h4>
             <ul className="space-y-2 text-xs text-[#7A6C68]">
-              <li><a href="#bestsellers" className="hover:text-[#C26D70] transition-colors">New Arrivals</a></li>
-              <li><a href="#bestsellers" className="hover:text-[#C26D70] transition-colors">Bestsellers</a></li>
-              <li><a href="#categories" className="hover:text-[#C26D70] transition-colors">Stationery</a></li>
-              <li><a href="#gifting" className="hover:text-[#C26D70] transition-colors">Gifts & Hampers</a></li>
+              <li><Link to="/category/stationery" className="hover:text-[#C26D70] transition-colors">Stationery</Link></li>
+              <li><Link to="/category/bags-accessories" className="hover:text-[#C26D70] transition-colors">Bags & Accessories</Link></li>
+              <li><Link to="/category/beauty" className="hover:text-[#C26D70] transition-colors">Beauty & Self Care</Link></li>
+              <li><Link to="/category/gifts" className="hover:text-[#C26D70] transition-colors">Gifts & Hampers</Link></li>
+              <li><Link to="/collection/new-arrivals" className="hover:text-[#C26D70] transition-colors">New Arrivals</Link></li>
+              <li><Link to="/collection/bestsellers" className="hover:text-[#C26D70] transition-colors">Bestsellers</Link></li>
             </ul>
           </div>
 
           {/* Help Column */}
           <div className="space-y-3">
-            <h4 className="font-serif text-sm font-bold text-[#2D2424] uppercase tracking-wider">
-              Help
+            <h4 className="font-serif text-xs font-bold text-[#2D2424] uppercase tracking-wider">
+              HELP
             </h4>
             <ul className="space-y-2 text-xs text-[#7A6C68]">
-              <li><a href="#footer" className="hover:text-[#C26D70] transition-colors">Contact Us</a></li>
-              <li><a href="#footer" className="hover:text-[#C26D70] transition-colors">Shipping Policy</a></li>
-              <li><a href="#footer" className="hover:text-[#C26D70] transition-colors">Returns & Refunds</a></li>
-              <li><a href="#footer" className="hover:text-[#C26D70] transition-colors">FAQs</a></li>
+              <li><Link to="/contact" className="hover:text-[#C26D70] transition-colors">Contact Us</Link></li>
+              <li><Link to="/faq" className="hover:text-[#C26D70] transition-colors">Shipping & Delivery</Link></li>
+              <li><Link to="/faq" className="hover:text-[#C26D70] transition-colors">Returns & Refunds</Link></li>
+              <li><Link to="/faq" className="hover:text-[#C26D70] transition-colors">FAQs</Link></li>
+              <li><Link to="/contact" className="hover:text-[#C26D70] transition-colors">Track Order</Link></li>
             </ul>
           </div>
 
-          {/* Follow Us Column */}
+          {/* About Column */}
           <div className="space-y-3">
-            <h4 className="font-serif text-sm font-bold text-[#2D2424] uppercase tracking-wider">
-              Follow Us
+            <h4 className="font-serif text-xs font-bold text-[#2D2424] uppercase tracking-wider">
+              ABOUT
             </h4>
-            <p className="text-xs text-[#7A6C68]">
-              Tag us in your unboxing videos on Instagram <strong>@beadsofluck</strong> to win monthly gift hampers!
-            </p>
-            <div className="bg-[#FAF7F2] p-3 rounded-2xl border border-[#F2EBD9]">
-              <span className="text-[11px] font-bold text-[#C26D70] block">✨ Customer Support:</span>
+            <ul className="space-y-2 text-xs text-[#7A6C68]">
+              <li><Link to="/about" className="hover:text-[#C26D70] transition-colors">Our Story</Link></li>
+              <li><Link to="/category/custom-hampers" className="hover:text-[#C26D70] transition-colors">Custom Hampers</Link></li>
+              <li><a href="https://instagram.com" target="_blank" rel="noreferrer" className="hover:text-[#C26D70] transition-colors">Instagram</a></li>
+            </ul>
+            <div className="bg-[#FAF7F2] p-3 rounded-2xl border border-[#F2EBD9] mt-3">
+              <span className="text-[11px] font-bold text-[#C26D70] block">✨ Support Desk:</span>
               <span className="text-[11px] text-[#2D2424] block">hello@beadsofluck.com</span>
-              <span className="text-[11px] text-[#7A6C68] block">+91 98765 43210 (Mon-Sat)</span>
             </div>
           </div>
 
@@ -106,7 +115,7 @@ export default function Footer({ onScrollToTop }) {
           <p>© 2026 Beads of Luck. All rights reserved. Made with 💕 for cuties everywhere.</p>
           
           <button
-            onClick={onScrollToTop}
+            onClick={scrollToTop}
             className="flex items-center gap-1.5 hover:text-[#C26D70] transition-colors text-xs font-semibold bg-[#FAF7F2] px-3.5 py-1.5 rounded-full border border-[#F2EBD9]"
           >
             <span>Back to top</span>

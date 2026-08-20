@@ -1,84 +1,72 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Sparkles, Mail, CheckCircle2 } from 'lucide-react';
+import { Sparkles, ArrowRight, Check } from 'lucide-react';
+import confetti from 'canvas-confetti';
 
 export default function NewsletterCTA() {
   const [email, setEmail] = useState('');
-  const [isSubscribed, setIsSubscribed] = useState(false);
+  const [subscribed, setSubscribed] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (email.trim()) {
-      setIsSubscribed(true);
-      setEmail('');
-    }
+    if (!email) return;
+    setSubscribed(true);
+    confetti({
+      particleCount: 50,
+      spread: 60,
+      origin: { y: 0.8 },
+      colors: ['#F7D6D0', '#C26D70', '#EFE8F8']
+    });
   };
 
   return (
-    <section className="py-16 sm:py-20 bg-[#FAF7F2]">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="relative rounded-3xl bg-gradient-to-r from-[#FBEAE7] via-[#FDF5F2] to-[#EFE8F8] p-8 sm:p-12 border border-[#F7D6D0] shadow-md text-center overflow-hidden"
-        >
-          {/* Subtle Background Icons */}
-          <div className="absolute -top-4 -left-4 text-3xl opacity-20 pointer-events-none">✨</div>
-          <div className="absolute -bottom-4 -right-4 text-3xl opacity-20 pointer-events-none">💌</div>
-
-          <div className="max-w-xl mx-auto space-y-4 relative z-10">
-            <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-white text-[#C26D70] text-xs font-semibold shadow-xs">
-              <Sparkles className="w-3.5 h-3.5" />
-              Join Our VIP Family
-            </span>
-
-            <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#2D2424]">
-              Stay in the Cute Club ✨
-            </h2>
-
-            <p className="text-sm sm:text-base text-[#594A47]">
-              Get first access to new arrivals, cute finds and special offers + 10% off your first order!
-            </p>
-
-            {isSubscribed ? (
-              <motion.div 
-                initial={{ scale: 0.9, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                className="p-4 bg-white rounded-2xl border border-[#F7D6D0] text-[#C26D70] font-semibold text-sm flex items-center justify-center gap-2 shadow-xs"
-              >
-                <CheckCircle2 className="w-5 h-5 text-[#C26D70]" />
-                <span>Yay! You're officially in the Cute Club ♡ Check your inbox soon!</span>
-              </motion.div>
-            ) : (
-              <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row items-center gap-3 pt-2">
-                <div className="relative w-full sm:flex-1">
-                  <Mail className="w-4 h-4 text-[#7A6C68] absolute left-4 top-1/2 -translate-y-1/2" />
-                  <input
-                    type="email"
-                    required
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Your email address"
-                    className="w-full pl-11 pr-4 py-3.5 rounded-full bg-white border border-[#F7D6D0] text-xs text-[#2D2424] placeholder-[#7A6C68] focus:outline-none focus:ring-2 focus:ring-[#C26D70] shadow-xs"
-                  />
-                </div>
-                <button
-                  type="submit"
-                  className="w-full sm:w-auto px-8 py-3.5 bg-[#C26D70] hover:bg-[#b05c5f] text-white text-xs font-semibold rounded-full shadow-md shadow-[#C26D70]/20 transition-all hover:shadow-lg"
-                >
-                  Join the Club
-                </button>
-              </form>
-            )}
-
-            <p className="text-[11px] text-[#7A6C68]">
-              No spam ever. Only sweet updates & exclusive cuteness! 💕
-            </p>
+    <section className="py-16 bg-gradient-to-b from-[#FAF7F2] to-[#FBEAE7]/50 border-t border-[#F2EBD9]">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        
+        <div className="bg-white p-8 sm:p-12 rounded-3xl border border-[#F7D6D0] shadow-lg relative overflow-hidden">
+          
+          <div className="w-12 h-12 rounded-full bg-[#FBEAE7] flex items-center justify-center text-xl mx-auto mb-4 border border-[#F7D6D0]">
+            💌
           </div>
 
-        </motion.div>
+          <h2 className="font-serif text-3xl font-bold text-[#2D2424]">
+            Join The Cute Club ✨
+          </h2>
+
+          <p className="text-xs sm:text-sm text-[#7A6C68] max-w-md mx-auto mt-2">
+            Be the first to know about new drops, secret discount codes, and cute gifting inspo right in your inbox!
+          </p>
+
+          {subscribed ? (
+            <div className="mt-6 p-4 rounded-2xl bg-[#FBEAE7] border border-[#F7D6D0] text-xs font-bold text-[#C26D70] flex items-center justify-center gap-2">
+              <Check className="w-4 h-4 text-[#C26D70]" />
+              <span>Yay! You're officially in the Cute Club! Check your inbox soon 💕</span>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="mt-6 max-w-md mx-auto flex flex-col sm:flex-row gap-3">
+              <input
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email address..."
+                className="flex-1 px-5 py-3.5 rounded-full border border-[#F7D6D0] bg-[#FAF7F2] text-xs text-[#2D2424] focus:outline-none focus:ring-2 focus:ring-[#C26D70]"
+              />
+              <button
+                type="submit"
+                className="px-8 py-3.5 bg-[#C26D70] hover:bg-[#b05c5f] text-white font-bold text-xs uppercase tracking-wider rounded-full shadow-md transition-all flex items-center justify-center gap-2 group"
+              >
+                <span>JOIN NOW</span>
+                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+              </button>
+            </form>
+          )}
+
+          <p className="text-[10px] text-[#7A6C68] mt-4">
+            No spam ever. Unsubscribe anytime with 1-click. 🌸
+          </p>
+
+        </div>
+
       </div>
     </section>
   );

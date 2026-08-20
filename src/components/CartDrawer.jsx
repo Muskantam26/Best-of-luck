@@ -1,15 +1,18 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Trash2, ShoppingBag, ArrowRight, Sparkles, Tag, ShieldCheck } from 'lucide-react';
+import { X, Trash2, ShoppingBag, ArrowRight, Sparkles, ShieldCheck } from 'lucide-react';
+import { useDispatch } from 'react-redux';
+import { openCheckout } from '../store/checkoutSlice';
 
 export default function CartDrawer({ 
   isOpen, 
   onClose, 
   cartItems, 
   onUpdateQuantity, 
-  onRemoveItem, 
-  onProceedToCheckout 
+  onRemoveItem
 }) {
+  const dispatch = useDispatch();
+
   if (!isOpen) return null;
 
   const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
@@ -17,6 +20,11 @@ export default function CartDrawer({
   const progressPercent = Math.min(100, (subtotal / freeShippingThreshold) * 100);
   const shippingFee = subtotal >= freeShippingThreshold || subtotal === 0 ? 0 : 79;
   const finalTotal = subtotal + shippingFee;
+
+  const handleCheckoutClick = () => {
+    onClose();
+    dispatch(openCheckout());
+  };
 
   return (
     <AnimatePresence>
@@ -27,7 +35,7 @@ export default function CartDrawer({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={onClose}
-          className="fixed inset-0 bg-black/50 backdrop-blur-sm transition-opacity"
+          className="fixed inset-0 bg-black/50 backdrop-blur-xs transition-opacity"
         />
 
         <div className="fixed inset-y-0 right-0 max-w-full flex pl-10">
@@ -63,7 +71,7 @@ export default function CartDrawer({
                     ? "✨ You unlocked FREE Shipping!" 
                     : `Add ₹${freeShippingThreshold - subtotal} more for FREE Shipping!`}
                 </span>
-                <span className="text-[#C26D70]">{Math.round(progressPercent)}%</span>
+                <span className="text-[#C26D70] font-bold">{Math.round(progressPercent)}%</span>
               </div>
               <div className="w-full h-2 bg-white rounded-full overflow-hidden border border-[#F7D6D0]">
                 <div 
@@ -77,7 +85,7 @@ export default function CartDrawer({
             <div className="flex-1 overflow-y-auto p-6 space-y-4">
               {cartItems.length === 0 ? (
                 <div className="h-full flex flex-col items-center justify-center text-center space-y-4 py-12">
-                  <div className="w-20 h-20 rounded-full bg-[#FBEAE7] flex items-center justify-center text-3xl">
+                  <div className="w-20 h-20 rounded-full bg-[#FBEAE7] flex items-center justify-center text-3xl border border-[#F7D6D0]">
                     🛍️
                   </div>
                   <h3 className="font-serif text-lg font-bold text-[#2D2424]">Your bag is empty</h3>
@@ -159,7 +167,7 @@ export default function CartDrawer({
               )}
             </div>
 
-            {/* Footer Summary & Checkout Button */}
+            {/* Footer Summary & Redux Checkout Button */}
             {cartItems.length > 0 && (
               <div className="p-6 bg-white border-t border-[#F2EBD9] space-y-4">
                 <div className="space-y-1.5 text-xs text-[#594A47]">
@@ -180,7 +188,7 @@ export default function CartDrawer({
                 </div>
 
                 <button
-                  onClick={onProceedToCheckout}
+                  onClick={handleCheckoutClick}
                   className="w-full py-4 bg-[#C26D70] hover:bg-[#b05c5f] text-white font-bold text-sm rounded-full transition-all shadow-md shadow-[#C26D70]/20 flex items-center justify-center gap-2 group"
                 >
                   <span>Proceed to Checkout</span>
