@@ -1,4 +1,11 @@
 {
+  "name": "customised-demo-root",
+  "private": true,
+  "scripts": {
+    "dev": "npm --prefix Customised-demo run dev",
+    "build": "npm --prefix Customised-demo run build",
+    "preview": "npm --prefix Customised-demo run preview"
+  },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.3",
     "react-router-dom": "^7.18.2",
