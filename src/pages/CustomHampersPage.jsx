@@ -66,48 +66,48 @@ export default function CustomHampersPage() {
   };
 
   return (
-    <div className="py-12 bg-[#FAF7F2] min-h-screen">
+    <div className="py-8 sm:py-12 bg-[#FAF7F2] min-h-screen pb-24 lg:pb-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Page Header */}
-        <div className="text-center max-w-2xl mx-auto mb-10">
-          <span className="text-xs font-bold uppercase tracking-widest text-[#C26D70] bg-[#FBEAE7] px-3.5 py-1.5 rounded-full border border-[#F7D6D0] inline-flex items-center gap-1.5 mb-3">
+        <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-10">
+          <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#C26D70] bg-[#FBEAE7] px-3.5 py-1.5 rounded-full border border-[#F7D6D0] inline-flex items-center gap-1.5 mb-2 sm:mb-3">
             <Sparkles className="w-3.5 h-3.5" />
             Interactive Custom Studio 💝
           </span>
-          <h1 className="font-serif text-3xl sm:text-4xl font-bold text-[#2D2424]">
+          <h1 className="font-serif text-2xl sm:text-4xl font-bold text-[#2D2424]">
             Build Your Custom Gift Hamper
           </h1>
-          <p className="text-xs sm:text-sm text-[#7A6C68] mt-2">
+          <p className="text-xs sm:text-sm text-[#7A6C68] mt-1.5 sm:mt-2">
             Select your premium box, pick 1 to 5 cute products, add a handwritten card message & enjoy 15% bundle savings!
           </p>
         </div>
 
         {/* Builder Studio Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start">
           
           {/* Left Controls (Steps 1, 2, 3) */}
-          <div className="lg:col-span-7 bg-white p-6 sm:p-8 rounded-3xl border border-[#F2EBD9] shadow-xs space-y-8">
+          <div className="lg:col-span-7 bg-white p-4 sm:p-8 rounded-3xl border border-[#F2EBD9] shadow-xs space-y-6 sm:space-y-8">
             
             {/* Step 1: Select Box */}
             <div>
               <label className="block text-xs font-bold text-[#2D2424] uppercase tracking-wider mb-3">
                 Step 1: Choose Your Premium Gift Box Style
               </label>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3">
                 {boxOptions.map((box) => (
                   <div
                     key={box.id}
                     onClick={() => setSelectedBox(box)}
-                    className={`p-4 rounded-2xl border text-center cursor-pointer transition-all ${
+                    className={`p-3 sm:p-4 rounded-2xl border text-center cursor-pointer transition-all ${
                       selectedBox.id === box.id
                         ? 'border-[#C26D70] bg-[#FBEAE7] shadow-sm'
                         : 'border-[#F2EBD9] bg-white hover:border-[#F7D6D0]'
                     }`}
                   >
-                    <div className="w-10 h-10 rounded-full mx-auto mb-2 border border-[#F7D6D0]" style={{ backgroundColor: box.color }} />
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full mx-auto mb-1.5 sm:mb-2 border border-[#F7D6D0]" style={{ backgroundColor: box.color }} />
                     <p className="text-xs font-bold text-[#2D2424]">{box.name}</p>
-                    <p className="text-xs text-[#C26D70] font-semibold mt-1">₹{box.price}</p>
+                    <p className="text-xs text-[#C26D70] font-semibold mt-0.5">₹{box.price}</p>
                   </div>
                 ))}
               </div>
@@ -119,30 +119,30 @@ export default function CustomHampersPage() {
                 <label className="text-xs font-bold text-[#2D2424] uppercase tracking-wider">
                   Step 2: Pick Cute Items (Select 1 to 5)
                 </label>
-                <span className="text-xs text-[#C26D70] font-bold bg-[#FBEAE7] px-2.5 py-1 rounded-full border border-[#F7D6D0]">
+                <span className="text-[10px] sm:text-xs text-[#C26D70] font-bold bg-[#FBEAE7] px-2.5 py-1 rounded-full border border-[#F7D6D0]">
                   {selectedProducts.length}/5 Selected
                 </span>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-80 overflow-y-auto pr-1">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3 max-h-80 overflow-y-auto pr-1">
                 {PRODUCTS.map((prod) => {
                   const isSelected = selectedProducts.some(p => p.id === prod.id);
                   return (
                     <div
                       key={prod.id}
                       onClick={() => toggleProduct(prod)}
-                      className={`p-3 rounded-2xl border flex items-center gap-3 cursor-pointer transition-all ${
+                      className={`p-2.5 sm:p-3 rounded-2xl border flex items-center gap-3 cursor-pointer transition-all ${
                         isSelected
                           ? 'border-[#C26D70] bg-[#FBEAE7]'
                           : 'border-[#F2EBD9] bg-[#FAF7F2] hover:border-[#F7D6D0]'
                       }`}
                     >
-                      <img src={prod.image} alt={prod.name} className="w-12 h-12 rounded-xl object-cover" />
+                      <img src={prod.image} alt={prod.name} className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl object-cover" />
                       <div className="overflow-hidden flex-1">
                         <p className="text-xs font-bold text-[#2D2424] truncate">{prod.name}</p>
                         <p className="text-[11px] text-[#C26D70] font-semibold">₹{prod.price}</p>
                       </div>
-                      <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs ${
+                      <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 ${
                         isSelected ? 'bg-[#C26D70] text-white' : 'border border-[#F7D6D0] bg-white text-[#7A6C68]'
                       }`}>
                         {isSelected ? <Check className="w-3.5 h-3.5" /> : <Plus className="w-3.5 h-3.5" />}
@@ -228,7 +228,7 @@ export default function CustomHampersPage() {
                 onClick={handleFinishHamper}
                 className="w-full py-4 px-6 bg-[#C26D70] hover:bg-[#b05c5f] text-white font-bold text-xs uppercase tracking-widest rounded-full transition-all shadow-md shadow-[#C26D70]/20 flex items-center justify-center gap-2 group"
               >
-                <span>COMPLETE & ADD HAMPER TO BAG</span>
+                <span>ADD HAMPER TO BAG</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </button>
             </div>
@@ -238,6 +238,24 @@ export default function CustomHampersPage() {
         </div>
 
       </div>
+
+      {/* Floating Mobile Bottom Sticky Hamper Bar */}
+      <div className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md p-3.5 border-t border-[#F2EBD9] shadow-2xl z-40 lg:hidden flex items-center justify-between gap-3">
+        <div>
+          <p className="text-[10px] text-[#7A6C68] font-bold uppercase tracking-wider">{selectedProducts.length} Items Selected</p>
+          <p className="font-serif text-lg font-bold text-[#2D2424]">₹{finalHamperPrice}</p>
+        </div>
+
+        <button
+          type="button"
+          onClick={handleFinishHamper}
+          className="px-5 py-3 bg-[#C26D70] hover:bg-[#b05c5f] text-white text-xs font-bold uppercase tracking-wider rounded-full shadow-md flex items-center gap-1.5"
+        >
+          <Gift className="w-4 h-4" />
+          <span>ADD HAMPER</span>
+        </button>
+      </div>
+
     </div>
   );
 }
